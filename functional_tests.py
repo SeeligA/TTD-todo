@@ -19,6 +19,13 @@ class NewVisitorTest(unittest.TestCase):
         """
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        """Helper function for testing list retrievals."""
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_and_retrieve_list(self):
         # User opens browser to visit website
         self.browser.get("http://localhost:8000")
@@ -40,9 +47,7 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         #  Now the page shows "1. Select VSC" as an to-do item
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Select VCS', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Select VCS')
 
         # When writing another item ("Install VCS")
         # in the text box below...
@@ -52,10 +57,8 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # ... the list updates again, now showing both items
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Select VCS', [row.text for row in rows])
-        self.assertIn('2: Install VCS', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Select VCS')
+        self.check_for_row_in_list_table('2: Install VCS')
 
         # Will the site remember those items? THe URL shows
         # a unique URL for the user - some text provides
@@ -63,6 +66,7 @@ class NewVisitorTest(unittest.TestCase):
 
         # WHen visiting the URl, the items are still there.
         self.fail("Finish the test!")
+
 
 if __name__ == "__main__":
     unittest.main(warnings="ignore")
