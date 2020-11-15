@@ -20,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
         # User opens browser to visit website
         self.browser.get("http://localhost:8000")
         # The page title mentions "KERN"
-        self.assertIn("KERN", self.browser.title)
+        self.assertIn("To-Do", self.browser.title)
         self.fail("Finish the test!")
         # Enter a to-do item straight away
 
