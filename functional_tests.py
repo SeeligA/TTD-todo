@@ -34,30 +34,35 @@ class NewVisitorTest(unittest.TestCase):
             'Enter a to-do item'
         )
         # When writing "Select VCS" into a text box
+        # and hitting ENTER, the page updates.
         inputbox.send_keys('Select VCS')
-        # and hitting ENTER
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
+
+        #  Now the page shows "1. Select VSC" as an to-do item
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Select VCS' for row in rows),
-            "New to-do item did not appear in table"
-        )
-        # And hitting Enter, the page updates. Now the
-        # page shows "1. Select VSC" as an to-do item
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Select VCS', [row.text for row in rows])
 
         # When writing another item ("Install VCS")
         # in the text box below...
-        self.fail("Finish the test!")
-        # ... the list update again, now showing both items
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Install VCS')
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        # ... the list updates again, now showing both items
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Select VCS', [row.text for row in rows])
+        self.assertIn('2: Install VCS', [row.text for row in rows])
 
         # Will the site remember those items? THe URL shows
         # a unique URL for the user - some text provides
         # additional details
 
         # WHen visiting the URl, the items are still there.
-
+        self.fail("Finish the test!")
 
 if __name__ == "__main__":
     unittest.main(warnings="ignore")
