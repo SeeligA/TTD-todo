@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunTests" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="Run Unit Tests" type="PythonConfigurationType" factoryName="Python">
     <module name="webdev" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
